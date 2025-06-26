@@ -73,15 +73,21 @@ topic = [prod]:arn:aws:sns:us-west-1:123456789012:prod-topic [dev]:arn:aws:sns:u
 
 ## 🧰 Installation
 
-You can install `envyro` as a local tool (coming soon as a CLI tool). For now, clone and run manually.
+You can install `envyro` CLI from pypy by running:
 
 ```bash
-git clone https://github.com/your-org/envyro
-cd envyro
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
+pip install envyro
+```
+or
+
+```
+python -m pip install envyro
+```
+
+or
+
+```
+python3 -m pip install envyro
 ```
 
 ---
@@ -90,8 +96,8 @@ python main.py
 
 Made with ❤️ by Manmeet Kohli, was there a need ? Don't know....
 
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/manmeet1049)
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/ManmeetKohli3)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/manmeet-kohli1049)
+
 ---
-
-## 📜 License
-
-MIT License
