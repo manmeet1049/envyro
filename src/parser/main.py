@@ -17,7 +17,10 @@ class EnvyroParser:
 
     def _parse(self):
         current_section = None
-
+        try:
+            self.file_path = self.file_path.resolve(strict=True)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File '{self.file_path}' not found.")
         with self.file_path.open("r", encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
@@ -90,3 +93,9 @@ class EnvyroParser:
                 env_key = key.upper().replace(".", "_")
                 f.write(f"{env_key}={val}\n")
 
+    def export_all(self) -> List[str]:
+        exported_envs = []
+        for env in self.envs:
+            self.export_env_file(env)
+            exported_envs.append(env)
+        return exported_envs
