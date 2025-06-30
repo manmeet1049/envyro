@@ -4,13 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "envyro"
-version = "0.2.0"
+version = "0.4.0"
 description = "Environment manager with multi-env parsing"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "rich>=14.0.0",
     "typer>=0.16.0",
+    "pyyaml>=6.0",
+    "tomli-w>=1.0.0",
 ]
 
 [project.scripts]
