@@ -114,7 +114,8 @@ class EnvyroParser:
     def export_json(self, env: str, output_path: Optional[str] = None) -> None:
         """Export environment variables to JSON format."""
         env_vars = self.get_env_vars(env)
-        output = Path(output_path) if output_path else Path(f"config.{env}.json")
+        output = Path(output_path) if output_path else Path(
+            f"config.{env}.json")
 
         nested_config = self._flatten_to_nested(env_vars)
 
@@ -129,12 +130,14 @@ class EnvyroParser:
             )
 
         env_vars = self.get_env_vars(env)
-        output = Path(output_path) if output_path else Path(f"config.{env}.yaml")
+        output = Path(output_path) if output_path else Path(
+            f"config.{env}.yaml")
 
         nested_config = self._flatten_to_nested(env_vars)
 
         with output.open("w") as f:
-            yaml.dump(nested_config, f, default_flow_style=False, sort_keys=False)
+            yaml.dump(nested_config, f,
+                      default_flow_style=False, sort_keys=False)
 
     def export_toml(self, env: str, output_path: Optional[str] = None) -> None:
         """Export environment variables to TOML format."""
@@ -144,7 +147,8 @@ class EnvyroParser:
             )
 
         env_vars = self.get_env_vars(env)
-        output = Path(output_path) if output_path else Path(f"config.{env}.toml")
+        output = Path(output_path) if output_path else Path(
+            f"config.{env}.toml")
 
         nested_config = self._flatten_to_nested(env_vars)
 
@@ -173,7 +177,8 @@ class EnvyroParser:
                     file.write(f"\n[{prefix}.{key}]\n")
                 else:
                     file.write(f"\n[{key}]\n")
-                self._write_toml(value, file, f"{prefix}.{key}" if prefix else key)
+                self._write_toml(
+                    value, file, f"{prefix}.{key}" if prefix else key)
             else:
                 if isinstance(value, str) and ('"' in value or "\n" in value):
                     value = f'"""\n{value}\n"""'
@@ -208,3 +213,28 @@ class EnvyroParser:
             self.export_env_file(env)
             exported_envs.append(env)
         return exported_envs
+
+    def diff_envs(self, env1: str, env2: str):
+        """
+        Compare two environments and return a dict with:
+        - only_in_env1: keys only in env1
+        - only_in_env2: keys only in env2
+        - differing: keys in both but with different values
+        - identical: keys in both with same value
+        """
+        vars1 = self.get_env_vars(env1)
+        vars2 = self.get_env_vars(env2)
+        set1 = set(vars1.keys())
+        set2 = set(vars2.keys())
+        only_in_env1 = set1 - set2
+        only_in_env2 = set2 - set1
+        common = set1 & set2
+        differing = {k: (vars1[k], vars2[k])
+                     for k in common if vars1[k] != vars2[k]}
+        identical = {k: vars1[k] for k in common if vars1[k] == vars2[k]}
+        return {
+            "only_in_env1": {k: vars1[k] for k in only_in_env1},
+            "only_in_env2": {k: vars2[k] for k in only_in_env2},
+            "differing": differing,
+            "identical": identical,
+        }
