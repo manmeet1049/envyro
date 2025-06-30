@@ -30,6 +30,30 @@ Break a single `.envyro` file into multiple `.env` files like `.env.dev`, `.env.
 envyro split
 ```
 
+### 4. 🎨 Export to Multiple Formats
+Export your configuration to various formats including JSON, YAML, and TOML.
+
+**Commands:**
+```bash
+# Export to JSON format
+envyro export --env dev --format json
+
+# Export to YAML format  
+envyro export --env dev --format yaml
+
+# Export to TOML format
+envyro export --env dev --format toml
+
+# Export to custom output file
+envyro export --env prod --format json --output config.production.json
+```
+
+**Supported Formats:**
+- `env` - Traditional .env format (default)
+- `json` - JSON format with nested structure
+- `yaml` - YAML format with nested structure  
+- `toml` - TOML format with nested structure
+
 ---
 
 ## 🧪 Example `.envyro` Format
@@ -67,7 +91,7 @@ topic = [prod]:arn:aws:sns:us-west-1:123456789012:prod-topic [dev]:arn:aws:sns:u
 - ✅ **Single-file config** for all environments
 - ✅ Allows **default (`[*]`) and environment-specific values**
 - ✅ Cleaner and more maintainable than multiple `.env` files
-- ✅ Easy to convert into `.env`, `.yaml`, or Python dict
+- ✅ Easy to convert into `.env`, `.yaml`, `.json`, `.toml`, or Python dict
 
 ---
 
