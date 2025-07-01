@@ -84,13 +84,18 @@ class EnvyroParser:
         for section, entries in data.items():
             if section == self.ENV_SECTION:
                 continue
-
+            if section == '*':
+                # Global/flat keys
+                for key, raw_val in entries.items():
+                    resolved = self._resolve_value(raw_val, env)
+                    if resolved != "":
+                        result[key] = resolved
+                continue
             for key, raw_val in entries.items():
                 full_key = f"{section}.{key}" if section else key
                 resolved = self._resolve_value(raw_val, env)
                 if resolved != "":
                     result[full_key] = resolved
-
         return result
 
     def get_env_vars(self, env: Optional[str] = None) -> Dict[str, str]:
