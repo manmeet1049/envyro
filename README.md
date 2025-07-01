@@ -113,6 +113,33 @@ region = [*]:us-east-1
 [aws.sns]
 topic = [prod]:arn:aws:sns:us-west-1:123456789012:prod-topic [dev]:arn:aws:sns:us-west-2:123456789012:dev-topic
 ```
+## 🆕 Global Variables with [*] Section (NEWLY ADDED in v-0.5.0)
+
+You can now declare global (flat) variables in your `.envyro` file using the special `[ * ]` section. This is useful for variables that don't fit into a nested section or for direct migration from flat `.env` files.
+
+### Example `.envyro`:
+```ini
+[envs]
+environments = dev, prod
+default = dev
+
+[*]
+BUCKET_NAME = [prod]:prod-bucket [dev]:dev-bucket [*]:default-bucket
+API_KEY = [*]:my-api-key
+
+[db]
+host = [*]:localhost
+```
+
+### Exported `.env` for dev:
+```env
+BUCKET_NAME=dev-bucket
+API_KEY=my-api-key
+DB_HOST=localhost
+```
+
+- Variables in `[ * ]` are exported as flat keys (no section prefix)
+- You can use environment-specific or default values as usual
 
 ---
 
@@ -149,7 +176,7 @@ python3 -m pip install envyro
 
 ## 👨‍💻 Author
 
-Made with ❤️ by Manmeet Kohli, was there a need ? Don't know....
+Made by Manmeet Kohli, was there a need ? Don't know....
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/manmeet1049)
 [![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/ManmeetKohli3)
